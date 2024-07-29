@@ -2,7 +2,7 @@
 
 function getProfesores($conn)
 {
-    $sql = "SELECT id, nombre FROM profesores";
+    $sql = "SELECT id, nombre FROM profesores order by nombre asc";
     $result_profesores = $conn->query($sql);
     $profesores = [];
     if ($result_profesores->num_rows > 0) {

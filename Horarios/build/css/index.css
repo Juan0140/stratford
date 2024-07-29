@@ -1,9 +1,10 @@
 :root{
     --fuente: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-    --azul: #2326CA;
-    --azulFuerte:#14169E;
-    --azulClaro: #59d7ea;
+    --azul: #3085d6;
+    --azulFuerte:#256bb5;
+    --azulClaro: #65D9FF
+    ;
     --blanco: #fff;
     --crema: #F6FFDE;
     --grisClaro: #F5F5F5;
@@ -74,13 +75,20 @@ a{
     padding: 1rem;
     border-radius: .5rem;
     color: var(--blanco);
+    transition: background-color .3s ease-in-out;
 }
 .boton-eliminar:hover{
     cursor: pointer;
     background-color: #ba1515;
 }
 
+.m-r{
+    grid-template-columns: 1fr!important;
+}
 
+.m-r .btn-form{
+    place-items: end;
+}
 .enca-tabla{
     display: flex;
     justify-content: space-between;
@@ -215,8 +223,11 @@ a{
 
 .formulario-in .campo input:not([type="submit"]),
 .formulario-in .campo select{
-    padding: .5rem;
+    padding: 1rem;
+    font-size: 1.5rem;
+    margin: 0;
 }
+
 
 
 
@@ -227,8 +238,9 @@ a{
 }
 
 .btn-form{
-    place-items: center start;
+    place-items: end start;
 }
+
 
 .formulario-in{
     display: grid;
@@ -285,6 +297,7 @@ a{
 table {
     border-collapse: collapse; /* Para que los bordes no se dupliquen */
     width: 100%;
+    text-align: center;
 }
 table, th, td{
     border: 1px solid #000;
@@ -296,7 +309,7 @@ th{
     padding: .5rem;
 }
 td{
-    background-color: var(--azulclarito);
+    background-color: var(--blanco);
     padding: .5rem;
 
 }
@@ -311,7 +324,33 @@ th p{
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    row-gap: .5rem;
+    row-gap: .7rem;
+}
+
+.swal2-popup {
+    width: auto !important; /* Ajusta el ancho del modal */
+    padding: 1rem !important; /* Ajusta el padding del modal */
+}
+
+.titulo-alert {
+    font-size: 2rem; /* Ajusta el tamaño del título */
+}
+
+.icono{
+    width: 10rem;
+    height: 10rem;
+}
+
+.text-alert{
+    font-size: 1.6rem;
+}
+.custom-button{
+    font-size: 1.6rem;
+}
+
+.acciones{
+    display: flex;
+    justify-content: space-evenly;
 }
 
 

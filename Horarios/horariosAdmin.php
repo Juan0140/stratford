@@ -1,12 +1,13 @@
 <?php
 require 'includes/db/db.php';
 require 'includes/functions/funciones.php';
+session_start();
 
 $profesores = getProfesores($conn);
 $horarios = getHorarios($conn);
 $dias = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
-
 ?>
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -18,15 +19,32 @@ $dias = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domin
     <link rel="stylesheet" href="build/css/normalize.css">
     <script src="build/js/nav.js"></script>
     <script src="build/js/horarios.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
+    <?php
+    if (isset($_SESSION['alerta'])) {
+        if ($_SESSION['alerta'] == '1') { ?>
+            <script>
+                Swal.fire({
+                    position: "top-end",
+                    icon: "success",
+                    title: "<?php echo $_SESSION['mensaje'] ?>",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+            </script>
+    <?php  }
+        unset($_SESSION['alerta']);
+        unset($_SESSION['mensaje']);
+    }
+    ?>
     <header>
         <nav class="navegador">
             <div class="contenido-nav">
                 <div class="imagen-nav">
                     <img src="https://stratfordlernen.com/images/de1a56e713384c6ad4a7bba0d040b881.svg" alt="Logo">
-
                     <svg id="toggle-nav" class="toggle-nav" xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-menu-2" width="40" height="40" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
                         <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                         <path d="M4 6l16 0" />
@@ -35,55 +53,57 @@ $dias = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domin
                     </svg>
                 </div>
                 <div class="hiper-nav">
-                    <a href="" class="hiper active">Horarios</a>
-                    <a href="" class="hiper">Profesores</a>
+                    <a href="./horariosAdmin.php" class="hiper active">Horarios</a>
+                    <a href="./profesoresAdmin.php" class="hiper">Profesores</a>
                     <a href="" class="hiper">Cambiar Contraseña</a>
-                    <a href="" class="hiper">Cerrar Sesion</a>
+                    <a href="" class="hiper">Cerrar Sesión</a>
                 </div>
             </div>
         </nav>
     </header>
     <main class="contenedor">
-        <form action="">
+        <form action="includes/functions/asignarHorario.php" method="post">
             <fieldset class="formulario-in">
                 <legend>Insertar o Actualizar Horario</legend>
                 <div class="campo">
-                    <label for="">Profesor</label>
-                    <select name="" id="">
-                        <option value="" selected disabled>--SELECCIONA UN PROFESOR</option>
-                        <option value="">Juan</option>
-                        <option value="">Pedro</option>
+                    <label for="profesor">Profesor</label>
+                    <select name="idProfesor" id="profesor" required>
+                        <option value="" selected disabled>--SELECCIONA UN PROFESOR--</option>
+                        <?php foreach ($profesores as $id => $nombre) : ?>
+                            <option value="<?php echo $id ?>"><?php echo $nombre ?></option>
+                        <?php endforeach; ?>
                     </select>
                 </div>
                 <div class="campo">
-                    <label for="">Dia</label>
-                    <select name="" id="">
-                        <option value="" selected disabled>--SELECCIONA UN DIA</option>
-                        <option value="">Juan</option>
-                        <option value="">Pedro</option>
+                    <label for="dia">Día</label>
+                    <select name="dia" id="dia" required>
+                        <option value="" selected disabled>--SELECCIONA UN DÍA</option>
+                        <?php foreach ($dias as $dia) : ?>
+                            <option value="<?php echo $dia ?>"><?php echo $dia ?></option>
+                        <?php endforeach; ?>
                     </select>
                 </div>
                 <div class="campo">
-                    <label for="">Hora</label>
-                    <input type="time">
+                    <label for="hora">Hora</label>
+                    <input type="time" id="hora" name="hora" required>
                 </div>
                 <div class="campo">
-                    <label for="">Materia</label>
-                    <input type="text" name="" id="">
+                    <label for="materia">Materia</label>
+                    <input type="text" name="materia" id="materia" placeholder="Escribe la materia" required>
                 </div>
                 <div class="campo ">
                     <label for="">Modalidad</label>
-                    <div class="radios">
+                    <div class="radios" >
                         <label for="presencial">
-                            <input type="radio" name="modalidad" value="presencial" id="presencial">Presencial
+                            <input type="radio" name="modalidad" value="Presencial" id="presencial" required>Presencial
                         </label>
                         <label for="linea">
-                            <input type="radio" name="modalidad" value="linea" id="linea">En linea
+                            <input type="radio" name="modalidad" value="En Linea" id="linea" required>En línea
                         </label>
                     </div>
                 </div>
                 <div class="campo btn-form">
-                    <input type="submit" class="boton btn-form">
+                    <input type="submit" class="boton btn-form" value="Asignar">
                 </div>
             </fieldset>
         </form>
@@ -111,9 +131,9 @@ $dias = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domin
             <div class="horario-dia" data-dia="<?php echo $i; ?>">
                 <div class="enca-tabla">
                     <h2><?php echo $dia; ?></h2>
-                    <form>
-                        <input type="hidden" value="<?php echo $dia ?>">
-                        <input type="submit" value="Vaciar dia" class="boton-eliminar">
+                    <form class="form-vaciar" method="POST" action="includes/functions/vaciarDia.php">
+                        <input type="hidden" name="dia" value="<?php echo $dia ?>">
+                        <input type="submit" value="Vaciar día" class="boton-eliminar">
                     </form>
                 </div>
                 <table border="0" class="tabla">
@@ -137,12 +157,13 @@ $dias = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domin
                                     foreach ($detalles as $detalle) {
                                         if ($detalle['idProfesor'] == $id) {
                                             $found = true;
+                                            $hora_12 = date("h:i A", strtotime($detalle['hora']));
                                     ?>
                                             <div class="contenido-tabla">
                                                 <p><?php echo $detalle['materia'] ?></p>
                                                 <p><?php echo $detalle['modalidad'] ?></p>
-                                                <p><?php echo $detalle['hora'] ?></p>
-                                                <form method="POST" action="">
+                                                <p><?php echo $hora_12 ?></p>
+                                                <form method="POST" action="includes/functions/eliminarHorario.php" class="form-eliminar">
                                                     <input type="hidden" name="idHorario" value="<?php echo $detalle['id']; ?>">
                                                     <input type="submit" name="eliminar" value="Eliminar" class="boton-eliminar">
                                                 </form>
@@ -167,6 +188,45 @@ $dias = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domin
         endforeach;
         ?>
     </main>
+
+    <script>
+        function confirmarEliminacion(event) {
+            event.preventDefault(); // Previene el envío inmediato del formulario
+
+            Swal.fire({
+                title: '¿Estás seguro?',
+                html: '<p class="text-alert">No podrás revertir esto</p>',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí, eliminar',
+                cancelButtonText: 'Cancelar',
+                customClass: {
+                    confirmButton: 'custom-button',
+                    cancelButton: 'custom-button',
+                    htmlContainer: 'custom-container',
+                    icon: 'icono',
+                    title: 'titulo-alert'
+                },
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    event.target.submit(); // Enviar el formulario si se confirma
+                }
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('.form-eliminar').forEach(function (form) {
+                form.addEventListener('submit', confirmarEliminacion);
+            });
+
+            // Añadir el evento de confirmación a todos los formularios con la clase form-vaciar
+            document.querySelectorAll('.form-vaciar').forEach(function (form) {
+                form.addEventListener('submit', confirmarEliminacion);
+            });
+        });
+    </script>
 </body>
 
 </html>
