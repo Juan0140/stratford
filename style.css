@@ -1,0 +1,596 @@
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  box-sizing: border-box;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+#miDropdown .dropdown-menu {
+    left:-65px;
+}
+
+.texto-blanco {
+    color: white;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  background-color: #f5f5f5;
+}
+
+.botn-link {
+  font-weight: 400;
+  color: white;
+  text-decoration: underline;
+  border: none;
+  outline: none;
+}
+
+.registro {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.circle-image {
+  border-radius: 50%;
+  width: 200px;
+  height: 200px;
+  border: 5px solid black;
+  object-fit: cover;
+}
+
+#secundario {
+    width: 20%;
+}
+
+#secundario img{
+    width: 80px;
+    height: 100px;
+}
+
+#alumnoData {
+    width:75%;
+    text-align-last: start;
+}
+
+#alumnoFoto {
+    width: 20%;
+}
+
+#alumnoFoto img{
+    width: 80px;
+    height: 100px;
+}
+
+#principal {
+    width: 75%; /* Reducido del 80% original para dejar espacio al div de botones */
+    text-align-last: start;
+}
+
+#botones {
+    width: 15%; /* Ancho del 15% */
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end; /* Alinear los botones a la derecha */
+    justify-content: flex-end;
+}
+
+#botones img {
+    width: 50px;
+    height: 50px;
+}
+
+#botones button {
+    margin-top: 5px; /* Espacio entre los botones */
+    margin-right: 5px;
+}
+
+.btn-add {
+    width: 80px;
+    height: 80px;
+}
+
+.collapse p {
+  color: white;
+}
+
+.botn-link:focus,
+.botn-link:active {
+  text-decoration: underline;
+  color: white;
+}
+
+main {
+  min-height: 100vh;
+  padding: 1rem 2rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.btn-container {
+      background-color: #00315F;
+      width: 100%;
+    }
+    
+.section-container {
+  width: 100%;
+  background-color: #FFFDD0;
+  text-align-last: center;
+}
+
+.title {
+  margin: 0;
+  line-height: 1.15;
+  font-size: 4rem;
+}
+
+.title,
+.description {
+  text-align: center;
+}
+
+.description {
+  margin: 4rem 0;
+  line-height: 1.5;
+  font-size: 1.5rem;
+}
+
+.code {
+  background: #fafafa;
+  border-radius: 5px;
+  padding: 0.75rem;
+  font-size: 1.1rem;
+  font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
+    Bitstream Vera Sans Mono, Courier New, monospace;
+}
+
+.grid {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  max-width: 800px;
+}
+
+.card {
+  margin: 1rem;
+  padding: 1.5rem;
+  text-align: left;
+  color: inherit;
+  text-decoration: none;
+  border: 1px solid #eaeaea;
+  border-radius: 10px;
+  transition: color 0.15s ease, border-color 0.15s ease;
+  max-width: 300px;
+  background-color: #007bff !important;
+}
+
+.card > card-body {
+    background-color: #007bff;
+}
+
+.card:hover,
+.card:focus,
+.card:active {
+  color: #0070f3;
+  border-color: #0070f3;
+}
+
+.card h2 {
+  margin: 0 0 1rem 0;
+  font-size: 1.5rem;
+}
+
+.card p {
+  margin: 0;
+  font-size: 1.25rem;
+  line-height: 1.5;
+}
+
+.div {
+  background-color: #ff0000;
+  display: flex;
+  flex-direction: column;
+  padding: 10px 10px 80px; 
+  min-height: 100vh;
+}
+
+
+.div-2 {
+  border-radius: 52px;
+  background-blend-mode: normal;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: start;
+  padding: 5px 5px 5px 5px;
+}
+
+.img {
+  aspect-ratio: 1.11;
+  object-fit: auto;
+  object-position: center;
+  width: 156px;
+  max-width: 100%;
+}
+
+.div-3 {
+  border-radius: 92px;
+  background-color: #00315F;
+  align-self: center;
+  display: flex;
+  margin-top: 56px;
+  width: 669px;
+  max-width: 100%;
+  justify-content: center;
+  align-items: center;
+  font-size: 36px;
+  color: #fff;
+  font-weight: 400;
+  white-space: nowrap;
+  padding: 80px 60px;
+  flex-direction: column;
+}
+
+.div-3 img {
+    width: 60%;
+}
+
+.div-4 {
+  display: flex;
+  width: 468px;
+  max-width: 100%;
+  flex-direction: column;
+  margin: 25px 0 26px;
+}
+
+.div-5 {
+  font-family: Inter, sans-serif;
+}
+
+.div-7 {
+  margin-top: 31px;
+  font: 32px Inter, sans-serif;
+}
+
+.div-9 {
+  z-index: 10;
+  align-self: center;
+  margin-top: 72px;
+}
+
+.div-6 input,
+.div-8 input,
+.div-9 button {
+  border-radius: 8px;
+  /* Puedes ajustar este valor según tus preferencias */
+  padding: 8px;
+  /* Añadir un relleno para mejorar el aspecto visual */
+  width: 100%;
+  /* Asegurar que los elementos ocupen todo el ancho del contenedor */
+  box-sizing: border-box;
+  /* Incluir el relleno y el borde en el ancho total del elemento */
+}
+
+.div-9 button {
+  background-color: #96BB7C;
+  /* Cambiar el color del botón según tus preferencias */
+  color: white;
+  /* Cambiar el color del texto del botón */
+  border: none;
+  /* Eliminar el borde del botón */
+}
+
+.modal-dialog {
+  max-width: 735px;
+  margin: 1.75rem auto;
+  padding: 0;
+}
+
+.drop-area {
+  height: calc(100% - 260px);
+  width: 100%;
+  padding: 1rem;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.drop-area.active {
+  background-color: #b8d4fe;
+  color: black;
+  border: 2px dashed #618ac9;
+}
+
+.drop-area h2 {
+  font-size: 30px;
+  font-weight: 500;
+  color: #000;
+}
+
+.drop-area span {
+  font-size: 25px;
+  color: #000;
+}
+
+.drop-area button {
+  padding: 10px 25px;
+  font-size: 20px;
+  border: 0;
+  outline: none;
+  background-color: #5256ad;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 20px;
+}
+
+/* Estilo personalizado para el checkbox */
+#cbox1 {
+  transform: scale(1.5); /* Hace que el checkbox sea más grande */
+  vertical-align: middle; /* Alinea verticalmente con el texto */
+  margin-right: 3px; /* Espaciado a la derecha del checkbox */
+  width: 50px;
+  height: 20px;
+}
+
+/* Estilo para el texto del checkbox */
+label[for="cbox1"] {
+  margin-bottom: 0; /* Elimina el margen inferior */
+  display: flex;
+  align-items: baseline;
+}
+
+.menu-sesion {
+    position: absolute;
+    top: 100%;
+    left: -65px;
+    z-index: 1000;
+    display: none;
+    float: left;
+    min-width: 10rem;
+    padding: 0.5rem 0;
+    margin: 0.125rem 0 0;
+    font-size: 1rem;
+    color: #212529;
+    text-align: left;
+    list-style: none;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid rgba(0, 0, 0, .15);
+    border-radius: 0.25rem;
+}
+
+.file-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  border: 1px solid #ddd;
+}
+
+.grupos{
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: -15px;
+    justify-content: center;
+    flex-direction: column;
+    align-content: center;
+}
+
+.grupos > .row {
+    width: 100%;
+    text-align-last: center;
+}
+
+#preview {
+  margin-top: 10px;
+}
+
+.preview-img {
+    width:100px;
+}
+
+.status-text {
+  padding: 0 10px;
+}
+
+.success {
+  color: #52ad5a;
+}
+
+.failure {
+  color: #ff0000;
+}
+
+.align-space-evenly-grid {
+  width: 98%;
+  display: grid;
+  gap: 5px;
+  margin: 10px;
+}
+
+#openModalBtn {
+  margin-left: auto;
+  margin-right: 50px;
+}
+
+.my-cell button {
+  color: white;
+}
+
+.my-cell button:active {
+  color: red;
+}
+
+.my-cell button:hover {
+  color: red;
+  text-decoration: underline red;
+}
+
+.my-cell {
+  border: 2px dashed #aa3333;
+  margin: 0;
+  background-color: #00315F;
+}
+
+.my-cell.entregada {
+    background-color: green; /* Cambia el color de fondo a verde para las actividades entregadas */
+}
+
+.my-cell .collapse {
+  padding: 10px;
+  /* Ajusta el relleno según tus necesidades */
+}
+
+#mostrarPassword {
+  width: 40px;
+  height: 40px;
+}
+
+#togglePassword {
+  width: 50px;
+  height: 40px;
+}
+
+.password-container {
+  display: flex;
+  align-items: center; /* Centra verticalmente los elementos */
+}
+
+.password-container input {
+  flex: 1; /* El input ocupará todo el espacio disponible */
+}
+
+.password-container button {
+  margin-left: 10px; /* Espacio entre el input y el botón */
+}
+
+.navbar-nav {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-nav .nav-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icono-grupos {
+    width: 200px;
+    height: 200px;
+}
+
+.botones-grupos{
+    width:100%;
+}
+
+.enlace-archivo {
+    color: white; /* Color del texto */
+    text-decoration: underline; /* Subrayado */
+}
+
+@media (max-width: 991px) {
+  .div-3 {
+    margin-top: 40px;
+    white-space: initial;
+    padding: 0 20px;
+  }
+}
+
+@media (max-width: 991px) {
+  .div-4 {
+    white-space: initial;
+  }
+}
+
+@media (max-width: 991px) {
+  .div-5 {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 991px) {
+  .div-7 {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 991px) {
+  .div-9 {
+    white-space: initial;
+    padding-left: 20px;
+    margin-top: 40px;
+  }
+}
+
+@media (max-width: 600px) {
+  .grid {
+    width: 100%;
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 991px) {
+  .div-2 {
+    max-width: 100%;
+    padding-right: 20px;
+  }
+}
+
+/* Media query para ajustar estilos en dispositivos móviles */
+@media (max-width: 768px) {
+  .password-container {
+    flex-direction: row; /* Apila los elementos verticalmente */
+  }
+
+  .password-container button {
+    margin-left: 0; /* Elimina el margen entre el input y el botón */
+    margin-top: 10px; /* Agrega espacio entre el input y el botón */
+  }
+
+  .modal-dialog {
+    max-width: 100%;
+    margin: 1rem; /* Ajusta el margen según sea necesario */
+  }
+
+  .modal-content {
+    border-radius: 0; /* Elimina el redondeo de bordes si es necesario */
+  }
+
+  .modal-body {
+    padding: 1rem; /* Ajusta el relleno según sea necesario */
+  }
+
+  #openModalBtn {
+    width: 100%;
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+}

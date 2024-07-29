@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Administración</title>
+  <link href="style.css" rel="stylesheet" type="text/css" />
+  <script type="module" src="admin.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+  <!-- Popper JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+</head>
+          <body>
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                  <li class="nav-item"><a class="nav-link" href="#"><img loading="lazy"
+                        srcset="https://stratfordlernen.com/images/de1a56e713384c6ad4a7bba0d040b881.svg" class="img"
+                        alt="Stratfordlernen" /></a></li>
+                </ul>
+                <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                  <a class="nav-link" href="https://stratfordlernen.com">Home <span class="sr-only"></span></a>
+                </li>
+              <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <span id="nombreUsuario">Usuario</span>
+              </a>
+              <div class="dropdown-menu text-center" style="left: 0px;" aria-labelledby="navbarDropdown" data-display="static">
+                  <a class="dropdown-item" href="#" id="dashboardBtn">Dashboard</a>
+                  <a class="dropdown-item" id="cerrarSesionBtn" href="#">Cerrar Sesión</a>
+              </div>
+          </li>
+      </ul>
+      </div>
+    </nav>
+            <main>
+              <div class="btn-container">
+                <div class="container d-flex justify-content-center flex-wrap">
+                    <!-- Botón para Administrar Grupos -->
+                    <button type="button" class="btn btn-admingroup my-2 mx-2 flex-fill" style="width: 250px; height: 100px;">
+                      <img src="iconos/AG.png" alt="Administrar Grupos" style="width: 100%; height: 100%;">
+                    </button>
+                  
+                    <!-- Botón para Administrar Alumnos -->
+                    <button type="button" class="btn btn-addalumno my-2 mx-2 flex-fill" style="width: 250px; height: 100px;">
+                      <img src="iconos/AA.png" alt="Administrar Alumnos" style="width: 100%; height: 100%;">
+                    </button>
+                  
+                    <!-- Botón para Administrar Docentes -->
+                    <button type="button" class="btn btn-adminprofesor my-2 mx-2 flex-fill" style="width: 250px; height: 100px;">
+                      <img src="iconos/AD.png" alt="Administrar Docentes" style="width: 100%; height: 100%;">
+                    </button>
+                  </div>
+              </div>
+                  
+                  <!-- Secciones de Administración -->
+              <div class = "section-container">
+                <div id="administrarGrupos" class="seccion" style="display: none;">
+                    <h1>Administrar Grupos</h1>
+                    <div class="d-flex justify-content-end mb-2">
+                          <button type="button" id="agregarGruposBtn" class="btn"><img class="btn-add" src="iconos/AG-btn.png"></button>
+                      </div>
+                        <div id="gruposContainer" class="align-space-evenly-grid">
+                            <!-- Aquí se cargarán los grupos -->
+                        </div>
+                        <div id="demo" class="collapse">
+                          <div class="card card-body">
+                            <!--Aquí se mostrara la información al darle clic al grupo-->
+                          </div>
+                        </div>
+                </div>
+      
+                <div id="administrarAlumnos" class="seccion" style="display: none;">
+                      <h1>Administrar Alumnos</h1>
+                      <div class="d-flex justify-content-end mb-2">
+                          <button type="button" id="agregarAlumnoBtn" class="btn" data-seccion="administrarAlumnos"><img class="btn-add" src="iconos/AA-btn.png"></button>
+                      </div>
+                      <ul id="lista-alumnos">
+                          <div id="contenedor">
+                              <div id="secundario">
+                                <img src="">
+                              </div>
+                              <div id="principal">
+                                <h1>$name</h1>
+                                <h3>$id</h3>
+                              </div>
+                            </div>
+                      </ul>
+                  </div>
+                  
+                  <div id="administrarDocentes" class="seccion" style="display: none;">
+                      <h1>Administrar Docentes</h1>
+                      <div class="d-flex justify-content-end mb-2">
+                          <button type="button" id="agregarDocenteBtn" class="btn" data-seccion="administrarDocentes"><img class="btn-add" src="iconos/AD-btn.png"></button>
+                      </div>
+                        <ul id="lista-profesores">
+                            <div id="contenedor">
+                              <div id="secundario">
+                                <img src="">
+                              </div>
+                              <div id="principal">
+                                <h1>$name</h1>
+                                <h3>$id</h3>
+                              </div>
+                            </div>
+                        </ul>
+                      </div>
+                  </div>
+            </main>
+            
+            <!-- Modal para confirmar la eliminación -->
+            <div class="modal" id="confirmarEliminarModal">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                
+                  <!-- Modal Header -->
+                  <div class="modal-header">
+                    <h4 class="modal-title">Confirmar Eliminación</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  </div>
+                  
+                  <!-- Modal Body -->
+                  <div class="modal-body">
+                    ¿Desea eliminar este registro?
+                  </div>
+                  
+                  <!-- Modal Footer -->
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="button" id="btnConfirmarEliminar" class="btn btn-danger" data-id="" data-dismiss="modal">Eliminar</button>
+                  </div>
+                  
+                </div>
+              </div>
+            </div>
+            
+            <!-- Add Docente Modal -->
+            <div class="modal" id="addDocenteModal">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <!-- Modal Header -->
+                  <div class="modal-header">
+                    <h4 class="modal-title">Agregar Nuevo Docente</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  </div>
+                  <!-- Modal Body -->
+                  <div class="modal-body">
+                    <form id="docenteForm" enctype="multipart/form-data" action="admin-reg.php" method="post">
+                      <div class="form-group">
+                        <label for="nombreDocente">Nombre:</label>
+                        <input type="text" class="form-control" id="nombreDocente" name="nombre">
+                      </div>
+                      <div class="form-group">
+                        <label for="usuarioDocente">Usuario:</label>
+                        <input type="text" class="form-control" id="usuarioDocente" name="usuario">
+                      </div>
+                      <div class="form-group position-relative">
+                        <label for="contrasenaDocente">Contraseña:</label>
+                        <div class="password-container">
+                          <input type="password" class="form-control" id="contrasenaDocente" name="contrasena" placeholder="Ingrese su contraseña">
+                          <button type="button" id="togglePasswordDocente"> <img id="mostrarPassword" src="iconos/ojo.png" alt="Mostrar/Ocultar contraseña">
+                          </button>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                            <!-- Checkboxes para los grupos disponibles -->
+                            <div id="checkboxesContainerDocente"></div>
+                        </div>
+                        <div class="form-group" style="text-align: -webkit-center;">
+                            <div class="form-image">
+                                <img src="https://www.pngall.com/wp-content/uploads/5/Profile-Avatar-PNG-Picture.png" id="imgADocente" class="circle-image">
+                            </div>
+                            <!-- Ocultar el campo de entrada de archivo -->
+                            <input type="file" style="display: none;" class="form-control-file" id="fotoDocente" name="foto">
+                            <!-- Agregar un botón para cargar el archivo -->
+                            <br>
+                            <button type="button" class="btn btn-primary" id="cargarFotoDocenteBtn">Cargar Foto</button>
+                        </div>
+                      <input type="hidden" name="profesor" value="1">
+                      <!-- Modal Footer -->
+                      <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary" id="submitDocenteBtn">Enviar</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Agregar Grupo Modal -->
+            <div class="modal fade" id="agregarGrupoModal" tabindex="-1" aria-labelledby="agregarGrupoModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="agregarGrupoModalLabel">Agregar Nuevo Grupo</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="agregarGrupoForm" method="post" enctype="multipart/form-data" action="admin-grupo.php">
+                                <div class="mb-3">
+                                    <label for="nombreGrupo" class="form-label">Nombre del Grupo</label>
+                                    <input type="text" class="form-control" id="nombreGrupo" name="nombre" required>
+                                </div>
+                                <div class="mb-3">
+                                    <div class="form-group" style="text-align: -webkit-center;">
+                                    <div class="form-image">
+                                        <img src="https://www.pngall.com/wp-content/uploads/5/Profile-Avatar-PNG-Picture.png" id="imgGrupo" class="circle-image">
+                                    </div>
+                                        <!-- Ocultar el campo de entrada de archivo -->
+                                        <input type="file" style="display: none;" class="form-control-file" id="iconoGrupo" name="foto" accept="image/*" required>
+                                        <!-- Agregar un botón para cargar el archivo -->
+                                        <br>
+                                        <button type="button" class="btn btn-primary" id="cargarIconoBtn">Cargar Foto</button>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="detallesGrupo" class="form-label">Detalles del Grupo</label>
+                                    <textarea class="form-control" id="detallesGrupo" name="detalles" required></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Agregar Grupo</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Editar Registro Modal -->
+            <div class="modal" id="editModal" tabindex="-1" role="dialog">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <form id="editForm">
+                      <input type="hidden" id="editId">
+                      <div class="form-group">
+                        <label for="editName">Nombre</label>
+                        <input type="text" class="form-control" id="editName">
+                      </div>
+                      <div class="form-group">
+                        <label for="editUser">Usuario</label>
+                        <input type="text" class="form-control" id="editUser">
+                      </div>
+                      <div class="form-group">
+                        <label for="editPass">Contraseña</label>
+                        <div class="password-container">
+                          <input type="password" class="form-control" id="editPass" name="contrasena" placeholder="Ingrese su contraseña">
+                          <button type="button" id="togglePassword"> <img id="mostrarPassword" src="iconos/ojo.png" alt="Mostrar/Ocultar contraseña">
+                          </button>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="editFoto">Foto</label>
+                        <input type="file" class="form-control-file" id="editFoto" name="foto" accept="image/*">
+                      </div>
+                    </form>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" id="actualizarBtn">Actualizar</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+    <!-- Add Alumno Modal -->
+    <div class="modal" id="addAlumnoModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Agregar Nuevo Alumno</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <form id="alumnoForm" enctype="multipart/form-data" action="profeRegAlumno.php" method="post">
+                        <div class="form-group">
+                            <label for="nombreAlumno">Nombre:</label>
+                            <input type="text" class="form-control" id="nombreAlumno" name="nombre">
+                        </div>
+                        <div class="form-group">
+                            <label for="usuarioAlumno">Usuario:</label>
+                            <input type="text" class="form-control" id="usuarioAlumno" name="usuario">
+                        </div>
+                        <div class="form-group">
+                            <label for="contrasenaAlumno">Contraseña:</label>
+                            <div class="password-container">
+                                <input type="password" class="form-control" id="contrasenaAlumno" name="contrasena" placeholder="Ingrese su contraseña">
+                                <button type="button" id="togglePasswordAlumno">
+                                    <img id="mostrarPassword" src="iconos/ojo.png" alt="Mostrar/Ocultar contraseña">
+                                </button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <!-- Checkboxes para los grupos disponibles -->
+                            <div id="checkboxesContainer"></div>
+                        </div>
+                        <div class="form-group" style="text-align: -webkit-center;">
+                            <div class="form-image">
+                                <img src="https://www.pngall.com/wp-content/uploads/5/Profile-Avatar-PNG-Picture.png" id="imgAlumno" class="circle-image">
+                            </div>
+                                <!-- Ocultar el campo de entrada de archivo -->
+                                <input type="file" style="display: none;" class="form-control-file" id="fotoAlumno" name="foto">
+                                <!-- Agregar un botón para cargar el archivo -->
+                                <br>
+                                <button type="button" class="btn btn-primary" id="cargarFotoBtn">Cargar Foto</button>
+                            </div>
+                            <input type="hidden" name="profesor" value="0">
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary" id="submitAlumnoBtn">Enviar</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  </body>
+
+</html>

@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Profesor</title>
+  <link href="style.css" rel="stylesheet" type="text/css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script type="module" src="profesor.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</head>
+
+          <body>
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                  <li class="nav-item"><a class="nav-link" href="#"><img loading="lazy"
+                        srcset="https://stratfordlernen.com/images/de1a56e713384c6ad4a7bba0d040b881.svg" class="img"
+                        alt="Stratfordlernen" /></a></li>
+                </ul>
+                <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                  <a class="nav-link" href="https://stratfordlernen.com">Home <span class="sr-only"></span></a>
+                </li>
+              <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <span id="nombreUsuario">Usuario</span>
+              </a>
+              <div class="dropdown-menu text-center" style="left: 0px;" aria-labelledby="navbarDropdown" data-display="static">
+                  <a class="dropdown-item" href="#" id="dashboardBtn">Dashboard</a>
+                  <a class="dropdown-item" id="cerrarSesionBtn" href="#">Cerrar Sesión</a>
+              </div>
+          </li>
+      </ul>
+      </div>
+    </nav>
+    <main>
+      <div class="grupos mt-4" id="gruposContainer">
+        <div class="row justify-content-end ml-auto">
+            <button type="button" class="btn btn-primary btn-addalumno" data-toggle="modal" data-target="#addAlumnoModal">Añadir Alumno</button>
+        </div>
+        <!-- Las columnas se agregarán aquí -->
+      </div>
+    </main>
+    
+    <!-- Add Alumno Modal -->
+    <div class="modal" id="addAlumnoModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Agregar Nuevo Alumno</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <form id="alumnoForm" enctype="multipart/form-data" action="profeRegAlumno.php" method="post">
+                        <div class="form-group">
+                            <label for="nombreAlumno">Nombre:</label>
+                            <input type="text" class="form-control" id="nombreAlumno" name="nombre">
+                        </div>
+                        <div class="form-group">
+                            <label for="usuarioAlumno">Usuario:</label>
+                            <input type="text" class="form-control" id="usuarioAlumno" name="usuario">
+                        </div>
+                        <div class="form-group">
+                            <label for="contrasenaAlumno">Contraseña:</label>
+                            <div class="password-container">
+                                <input type="password" class="form-control" id="contrasenaAlumno" name="contrasena" placeholder="Ingrese su contraseña">
+                                <button type="button" id="togglePasswordAlumno">
+                                    <img id="mostrarPassword" src="iconos/ojo.png" alt="Mostrar/Ocultar contraseña">
+                                </button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <!-- Checkboxes para los grupos disponibles -->
+                            <div id="checkboxesContainer"></div>
+                        </div>
+                        <div class="form-group" style="text-align: -webkit-center;">
+                            <div class="form-image">
+                                <img src="https://www.pngall.com/wp-content/uploads/5/Profile-Avatar-PNG-Picture.png" id="imgAlumno" class="circle-image">
+                            </div>
+                                <!-- Ocultar el campo de entrada de archivo -->
+                                <input type="file" style="display: none;" class="form-control-file" id="fotoAlumno" name="foto">
+                                <!-- Agregar un botón para cargar el archivo -->
+                                <br>
+                                <button type="button" class="btn btn-primary" id="cargarFotoBtn">Cargar Foto</button>
+                            </div>
+                            <input type="hidden" name="profesor" value="0">
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary" id="submitAlumnoBtn">Enviar</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+            
+    <!-- Modal Grupo -->
+    <div class="modal fade" id="grupoModal" tabindex="-1" role="dialog" aria-labelledby="grupoModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="grupoModalLabel">Detalles del Grupo</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <!-- Pestañas de detalles, actividades, alumnos y gestionar grupo -->
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+              <li class="nav-item">
+                <a class="nav-link active" id="detalles-tab" data-toggle="tab" href="#detalles" role="tab" aria-controls="detalles" aria-selected="true">Detalles</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="actividades-tab" data-toggle="tab" href="#actividades" role="tab" aria-controls="actividades" aria-selected="false">Actividades</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="alumnos-tab" data-toggle="tab" href="#alumnos" role="tab" aria-controls="alumnos" aria-selected="false">Alumnos</a>
+              </li>
+            </ul>
+            <div class="tab-content" id="myTabContent">
+              <!-- Contenido de las pestañas -->
+              <div class="tab-pane fade show active" id="detalles" role="tabpanel" aria-labelledby="detalles-tab">
+                    <h2>Detalles del Grupo</h2>
+                    <form id="comentarioForm" class="comentario-form">
+                        <div class="form-group">
+                            <label for="comentario">Comentario:</label>
+                            <textarea class="form-control" id="comentario" name="comentario" rows="3"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Enviar Comentario</button>
+                    </form>
+                    <!-- Contenedor de comentarios -->
+                    <div id="comentariosContainer">
+                        <!-- Aquí se mostrarán los comentarios -->
+                    </div>
+                </div>
+              <div class="tab-pane fade" id="actividades" role="tabpanel" aria-labelledby="actividades-tab">
+                <!-- Contenido dinámico de actividades -->
+                <div class="row justify-content-end ml-auto" style="padding-right:15px; padding-top:10px">
+                    <button type="button" class="btn btn-primary btn-addalumno" data-toggle="modal" data-target="#myModal">Agregar Actividad</button>
+                </div>
+                <div class="align-space-evenly-grid">
+                  <!-- Aquí se cargan las actividades -->
+                </div>
+              </div>
+              <div class="tab-pane fade" id="alumnosContenedor" role="tabpanel" aria-labelledby="alumnos-tab">
+                <!-- Aquí se cargan los alumnos -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Modal Agregar Actividades-->
+      <div class="modal" id="myModal">
+          <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+              <div class="modal-content">
+
+                  <!-- Modal Header -->
+                  <div class="modal-header">
+                      <h4 class="modal-title">Agregar Actividad</h4>
+                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  </div>
+
+                  <!-- Modal Body -->
+                    <div class="modal-body">
+                      <form id="activityForm" action="actividades-reg.php" method="post" enctype="multipart/form-data">
+                        <div class="form-group">
+                          <label for="activityName">Nombre de la Actividad:</label>
+                          <input type="text" class="form-control" id="activityName" name="nombre" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="dueDate">Fecha y Hora límite de Entrega:</label>
+                            <input type="datetime-local" class="form-control" id="dueDate" required>
+                          </div>
+                          <div class="form-group">
+                            <label for="description">Descripción:</label>
+                            <textarea class="form-control" id="description" rows="3"></textarea>
+                          </div>
+                        <div class="form-group">
+                          <label for="documento">Documento</label>
+                          <input type="file" class="form-control form-control-sm" id="documento" name="documento[]" required multiple>
+                          <div id="preview"></div>
+                          <div id="status-container"></div>
+                        </div>
+                      </form>
+                    </div>
+
+                  <!-- Modal Footer -->
+                    <div class="modal-footer">
+                      <button type="submit" class="btn btn-primary btn-enviar-actividad submit-button">Asignar</button>
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    </div>
+            
+                  </div>
+                </div>
+              </div>
+              
+    <!-- Modal de confirmación de eliminación -->
+    <div class="modal fade" id="confirmacionEliminarModal" tabindex="-1" aria-labelledby="confirmacionEliminarModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class = "modal-header">
+                    <h5 class="modal-title" id="confirmacionEliminarModalLabel">Confirmación de Eliminación</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    ¿Estás seguro de que deseas eliminar esta actividad?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-danger btn-eliminar-actividad">Eliminar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal de edición de actividad -->
+    <div class="modal fade" id="editarActividadModal" tabindex="-1" aria-labelledby="editarActividadModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editarActividadModalLabel">Editar Actividad</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="editarActividadForm" action="actividades-edit.php" method="post" enctype="multipart/form-data">
+                        <input type="hidden" id="idActividad" name="id_actividad" value="">
+                        <div class="form-group">
+                            <label for="nombreActividad">Nombre de la Actividad:</label>
+                            <input type="text" class="form-control" id="nombreActividad" name="nombre" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="fechaEntrega">Fecha y Hora límite de Entrega:</label>
+                            <input type="datetime-local" class="form-control" id="fechaEntrega" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="descripcionActividad">Descripción:</label>
+                            <textarea class="form-control" id="descripcionActividad" rows="3"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="documento">Documento</label>
+                            <input type="file" class="form-control form-control-sm" id="documento" name="documento[]" required multiple>
+                            <div id="preview"></div>
+                            <div id="status-container"></div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary btn-editar-actividad">Guardar Cambios</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+  </body>
+
+</html>

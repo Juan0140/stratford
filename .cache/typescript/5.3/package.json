@@ -1,0 +1,1 @@
+{"private":true,"dependencies":{"types-registry":"^0.1.684"},"devDependencies":{"@types/bcrypt":"^5.0.2","@types/bcryptjs":"^2.4.6","@types/busboy":"^1.5.3","@types/cors":"^2.8.17","@types/express":"^4.17.21","@types/express-fileupload":"^1.4.4","@types/node":"^20.10.4","@types/nodemon":"^1.19.6","@types/object-assign":"^4.0.33","@types/react":"^18.2.66","@types/vary":"^1.1.3"}}
