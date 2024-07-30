@@ -37,3 +37,17 @@ function debuguear($var)
     echo ("</pre>");
     exit;
 }
+
+function sendAlert($conn, $tipo, $mensaje, $url){
+    $conn->close();
+    $_SESSION['alerta']=$tipo;
+    $_SESSION['mensaje']= $mensaje;
+    header("Location: " . $url);
+}
+
+
+function isAuth(){
+  if(!$_SESSION['auth']){
+    header('Location: /Horarios/login.php');
+  }
+}

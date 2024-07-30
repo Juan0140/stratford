@@ -2,6 +2,7 @@
 require 'includes/db/db.php';
 require 'includes/functions/funciones.php';
 session_start();
+isAuth();
 
 $profesores = getProfesores($conn);
 ?>
@@ -17,6 +18,7 @@ $profesores = getProfesores($conn);
     <link rel="stylesheet" href="build/css/normalize.css">
     <script src="build/js/nav.js"></script>
     <script src="build/js/profesores.js"></script>
+    <script src="build/js/alerta.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
@@ -33,9 +35,24 @@ $profesores = getProfesores($conn);
                     timer: 1500
                 });
             </script>
-    <?php  }
-        unset($_SESSION['alerta']);
-        unset($_SESSION['mensaje']);
+
+        <?php
+            unset($_SESSION['alerta']);
+            unset($_SESSION['mensaje']);
+        } else if ($_SESSION['alerta'] == '2') { ?>
+            <script>
+                Swal.fire({
+                    position: "top-end",
+                    icon: "error",
+                    title: "<?php echo $_SESSION['mensaje'] ?>",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+            </script>
+    <?php
+            unset($_SESSION['alerta']);
+            unset($_SESSION['mensaje']);
+        }
     }
     ?>
     <header>
@@ -53,19 +70,28 @@ $profesores = getProfesores($conn);
                 <div class="hiper-nav">
                     <a href="./horariosAdmin.php" class="hiper">Horarios</a>
                     <a href="./profesoresAdmin.php" class="hiper active">Profesores</a>
-                    <a href="" class="hiper">Cambiar Contraseña</a>
-                    <a href="" class="hiper">Cerrar Sesión</a>
+                    <a href="includes/functions/cerrarSesion.php" class="hiper">Cerrar Sesión</a>
                 </div>
             </div>
         </nav>
     </header>
     <main class="contenedor-small">
+        <?php
+        if (isset($_SESSION['alerta']) && $_SESSION['alerta'] == 3) { ?>
+            <div class="alerta" id="alerta">
+                <p><?php echo $_SESSION['mensaje']; ?></p>
+            </div>
+        <?php
+            unset($_SESSION['alerta']);
+            unset($_SESSION['mensaje']);
+        }
+        ?>
         <form action="includes/functions/agregarProfesor.php" method="post">
             <fieldset class="formulario-in m-r">
                 <legend>Agregar Profesor</legend>
                 <div class="campo">
                     <label for="nombre">Nombre</label>
-                    <input type="text" name="nombre" id="nombre" placeholder="Ingresa el nombre de profesor" required>
+                    <input type="text" name="nombre" id="nombre" placeholder="Ingresa el nombre de profesor">
                 </div>
                 <div class="campo btn-form">
                     <input type="submit" value="Agregar" class="boton">
@@ -134,6 +160,7 @@ $profesores = getProfesores($conn);
             });
         });
     </script>
+    <?php $conn->close() ?>
 </body>
 
 </html>

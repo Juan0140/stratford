@@ -2,10 +2,14 @@
 require 'includes/db/db.php';
 require 'includes/functions/funciones.php';
 session_start();
+isAuth();
 
 $profesores = getProfesores($conn);
 $horarios = getHorarios($conn);
 $dias = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
+$form_data = [];
+$form_data = isset($_SESSION['form_data']) ? $_SESSION['form_data'] : [];
+unset($_SESSION['form_data']);
 ?>
 
 <!DOCTYPE html>
@@ -19,6 +23,7 @@ $dias = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domin
     <link rel="stylesheet" href="build/css/normalize.css">
     <script src="build/js/nav.js"></script>
     <script src="build/js/horarios.js"></script>
+    <script src="build/js/alerta.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
@@ -35,9 +40,10 @@ $dias = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domin
                     timer: 1500
                 });
             </script>
-    <?php  }
-        unset($_SESSION['alerta']);
-        unset($_SESSION['mensaje']);
+    <?php
+            unset($_SESSION['alerta']);
+            unset($_SESSION['mensaje']);
+        }
     }
     ?>
     <header>
@@ -55,50 +61,64 @@ $dias = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domin
                 <div class="hiper-nav">
                     <a href="./horariosAdmin.php" class="hiper active">Horarios</a>
                     <a href="./profesoresAdmin.php" class="hiper">Profesores</a>
-                    <a href="" class="hiper">Cambiar Contraseña</a>
-                    <a href="" class="hiper">Cerrar Sesión</a>
+                    <a href="includes/functions/cerrarSesion.php" class="hiper">Cerrar Sesión</a>
                 </div>
             </div>
         </nav>
     </header>
     <main class="contenedor">
+        <p>¡Hola!, <?php echo $_SESSION['name'] ?>.</p>
+        <?php
+        if (isset($_SESSION['alerta']) && $_SESSION['alerta'] == 3) { ?>
+            <div class="alerta" id="alerta">
+                <p><?php echo $_SESSION['mensaje']; ?></p>
+            </div>
+        <?php 
+            unset($_SESSION['alerta']);
+            unset($_SESSION['mensaje']);
+        }
+        ?>
         <form action="includes/functions/asignarHorario.php" method="post">
             <fieldset class="formulario-in">
                 <legend>Insertar o Actualizar Horario</legend>
                 <div class="campo">
                     <label for="profesor">Profesor</label>
-                    <select name="idProfesor" id="profesor" required>
-                        <option value="" selected disabled>--SELECCIONA UN PROFESOR--</option>
+                    <select name="idProfesor" id="profesor">
+                        <option value=" " disabled selected>--SELECCIONA UN PROFESOR--</option>
                         <?php foreach ($profesores as $id => $nombre) : ?>
-                            <option value="<?php echo $id ?>"><?php echo $nombre ?></option>
+                            <option value="<?php echo $id ?>" <?php echo isset($form_data['idProfesor']) && $form_data['idProfesor'] == $id ? 'selected' : ''; ?>>
+                                <?php echo $nombre ?>
+                            </option>
                         <?php endforeach; ?>
                     </select>
                 </div>
                 <div class="campo">
                     <label for="dia">Día</label>
-                    <select name="dia" id="dia" required>
-                        <option value="" selected disabled>--SELECCIONA UN DÍA</option>
+                    <select name="dia" id="dia">
+                        <option value="" disabled selected>--SELECCIONA UN DÍA--</option>
                         <?php foreach ($dias as $dia) : ?>
-                            <option value="<?php echo $dia ?>"><?php echo $dia ?></option>
+                            <option value="<?php echo $dia ?>" <?php echo isset($form_data['dia']) && $form_data['dia'] == $dia ? 'selected' : ''; ?>>
+                                <?php echo $dia ?>
+                            </option>
                         <?php endforeach; ?>
                     </select>
                 </div>
                 <div class="campo">
                     <label for="hora">Hora</label>
-                    <input type="time" id="hora" name="hora" required>
+                    <input type="time" id="hora" name="hora" value="<?php echo isset($form_data['hora']) ? $form_data['hora'] : ''; ?>">
                 </div>
                 <div class="campo">
                     <label for="materia">Materia</label>
-                    <input type="text" name="materia" id="materia" placeholder="Escribe la materia" required>
+                    <input type="text" name="materia" id="materia" placeholder="Escribe la materia" value="<?php echo isset($form_data['materia']) ? $form_data['materia'] : ''; ?>">
                 </div>
                 <div class="campo ">
                     <label for="">Modalidad</label>
-                    <div class="radios" >
+                    <div class="radios">
                         <label for="presencial">
-                            <input type="radio" name="modalidad" value="Presencial" id="presencial" required>Presencial
+                            <input type="radio" name="modalidad" value="Presencial" id="presencial" <?php echo isset($form_data['modalidad']) && $form_data['modalidad'] == 'Presencial' ? 'checked' : ''; ?>>Presencial
                         </label>
                         <label for="linea">
-                            <input type="radio" name="modalidad" value="En Linea" id="linea" required>En línea
+                            <input type="radio" name="modalidad" value="En Linea" id="linea" <?php echo isset($form_data['modalidad']) && $form_data['modalidad'] == 'En Linea' ? 'checked' : ''; ?>>En línea
                         </label>
                     </div>
                 </div>
@@ -161,7 +181,7 @@ $dias = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domin
                                     ?>
                                             <div class="contenido-tabla">
                                                 <p><?php echo $detalle['materia'] ?></p>
-                                                <p><?php echo $detalle['modalidad'] ?></p>
+                                                <p>(<?php echo $detalle['modalidad'] ?>)</p>
                                                 <p><?php echo $hora_12 ?></p>
                                                 <form method="POST" action="includes/functions/eliminarHorario.php" class="form-eliminar">
                                                     <input type="hidden" name="idHorario" value="<?php echo $detalle['id']; ?>">
@@ -216,17 +236,18 @@ $dias = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domin
             });
         }
 
-        document.addEventListener('DOMContentLoaded', function () {
-            document.querySelectorAll('.form-eliminar').forEach(function (form) {
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.form-eliminar').forEach(function(form) {
                 form.addEventListener('submit', confirmarEliminacion);
             });
 
             // Añadir el evento de confirmación a todos los formularios con la clase form-vaciar
-            document.querySelectorAll('.form-vaciar').forEach(function (form) {
+            document.querySelectorAll('.form-vaciar').forEach(function(form) {
                 form.addEventListener('submit', confirmarEliminacion);
             });
         });
     </script>
+    <?php $conn->close() ?>
 </body>
 
 </html>

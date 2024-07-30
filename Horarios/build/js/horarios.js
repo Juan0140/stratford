@@ -4,7 +4,6 @@ document.addEventListener('DOMContentLoaded',()=>{
 
 function iniciarApp(){
     filtrarDias();
-    preguntarConfirmacion();
 }
 
 function filtrarDias(){
